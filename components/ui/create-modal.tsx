@@ -23,7 +23,7 @@ const style = {
 };
 
 export default function CreateModal(props: any) {
-    const { btnText, newData, onClick, setTags, setCol, rows, variant, width } = props
+    const { btnText, newData, onClick, setTags, disabled, rows, variant, width, inMouse, outMouse, color } = props
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -41,7 +41,7 @@ export default function CreateModal(props: any) {
 
     return (
         <div>
-            <Button onClick={handleOpen} color="success" variant={variant} sx={{ width: { width } }}>{btnText}</Button>
+            <Button onClick={handleOpen} color={color} variant={variant} sx={{ width: { width } }} disabled={disabled} onMouseEnter={inMouse} onMouseLeave={outMouse}>{btnText}</Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -67,14 +67,9 @@ export default function CreateModal(props: any) {
                                     sx={{ marginTop: 2 }}>
                                     <OutlinedInput sx={{ marginRight: 2 }} required id='title' label="Title" color="success" onInput={getTagHandler} multiline rows={rows} />
                                     <Button variant="contained" onClick={submitInfo} color="success" sx={{ backgroundColor: "gray" }} endIcon={<SendIcon />}>Submit</Button>
-
-                                    {/* <TextField required id='title' variant="outlined" label="Title" color="success" onInput={getTagHandler} multiline rows={rows} hidden /> */}
-
                                 </Stack>
                             </FormControl>
 
-                            {/* <FormControl sx={{ justifyContent: "space-between" }}>
-                                <OutlinedInput required id='column_id' type="hidden" defaultValue={col_id}  /></FormControl> */}
                         </form>
                     </Box>
                 </Fade>

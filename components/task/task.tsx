@@ -3,10 +3,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Button, Stack } from '@mui/material';
 import DeleteTask from '../edit_component/delete-task';
+import MoveTask from '../edit_component/move-task';
 
 export default function TaskCard(props: any) {
     const [showIcon, setShowIcon] = React.useState(false)
-    const { task_name, refresh_tasks, task_id } = props
+    const { task_name, refresh_tasks, task_id, column_data, current_col_id } = props
 
     function showIconHandler() {
         setShowIcon(true);
@@ -23,7 +24,7 @@ export default function TaskCard(props: any) {
                     <Typography sx={{ fontSize: 14, textAlign: 'center' }} color="text.secondary">
                         {task_name}
                     </Typography>
-                    {showIcon ? <DeleteTask refresh_tasks={refresh_tasks} id={task_id} /> : null}
+                    {showIcon ? <Stack ><DeleteTask refresh_tasks={refresh_tasks} id={task_id} /><MoveTask id={task_id} columns={column_data} refresh_tasks={refresh_tasks} current_col_id={current_col_id} /></Stack> : null}
                 </Stack>
             </Box>
         </div>

@@ -60,7 +60,7 @@ export default function handler(
       stream.id !== column_id
     )
     fs.writeFileSync(filePath, JSON.stringify(newStreams));
-    res.status(201).json({ message: "Column Deleted Successfully", mabo: req.body })
+    res.status(201).json({ message: "Column Deleted Successfully" })
   } else {
     const filePath = dbDataPath();
     const data = dbDataRead(filePath)

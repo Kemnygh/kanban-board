@@ -63,3 +63,13 @@ export function DeleteTaskhandler(id: any) {
         }
     }).then((res) => res.json()).then((data) => console.log(data))
 }
+
+export function MoveTaskhandler(id: any, new_id: any) {
+    const reqBody = { id: id, new_id: new_id, type: 'move' }
+
+    fetch('/api/task', {
+        method: 'POST', body: JSON.stringify(reqBody), headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((res) => res.json()).then((data) => console.log(data))
+}
