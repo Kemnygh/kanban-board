@@ -8,10 +8,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 //   ;
 // };
 
-function dbDataPath() {
+export function dbDataPath() {
   return path.join(process.cwd(), 'data', 'column.json');
 }
-function dbDataRead(filePath: fs.PathOrFileDescriptor) {
+export function dbDataRead(filePath: string) {
   const fileData = fs.readFileSync(filePath);
   return JSON.parse(fileData.toString());
 }
@@ -33,6 +33,22 @@ export default function handler(
     const filePath = dbDataPath();
     const data = dbDataRead(filePath)
     data.push(newColumn);
+    fs.writeFileSync(filePath, JSON.stringify(data));
+    res.status(201).json({ message: "Column Creation Success" })
+  } else if (req.method === 'POST' && req.body.type === 'rename') {
+    const title = req.body.title
+    const column_id = req.body.column_id
+
+    const filePath = dbDataPath();
+    const data = dbDataRead(filePath)
+    // console.log(data)
+    const stream = data.find((column: any) => column.id === column_id)
+    const colIndex = data.indexOf(stream)
+    data[colIndex] = stream
+    // console.log(colIndex)
+    stream.name = title
+
+    // console.log(data)
     fs.writeFileSync(filePath, JSON.stringify(data));
     res.status(201).json({ message: "Column Creation Success" })
   } else {

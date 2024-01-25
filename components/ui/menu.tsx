@@ -12,7 +12,8 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu() {
+export default function LongMenu(props: any) {
+    const { rename, clear, remove } = props;
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,6 +22,11 @@ export default function LongMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    function multipleHandler() {
+        handleClose();
+        rename();
+    }
 
     return (
         <div>
@@ -45,15 +51,27 @@ export default function LongMenu() {
                 PaperProps={{
                     style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
-                        width: '20ch',
+                        width: '15ch',
                     },
                 }}
             >
-                {options.map((option) => (
+                {/* {options.map((option) => (
                     <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
                         {option}
                     </MenuItem>
-                ))}
+                ))} */}
+                <MenuItem onClick={multipleHandler}>
+                    Rename
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                    Clear
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                    Delete
+                </MenuItem>
+                {/* <div onClick={handleClose}>{rename}</div>
+                {clear}
+                {remove} */}
             </Menu>
         </div>
     );

@@ -6,6 +6,8 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import { Button, Card, Stack, TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import FormControl, { useFormControl } from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -21,7 +23,7 @@ const style = {
 };
 
 export default function CreateModal(props: any) {
-    const { btnText, onChange, onClick, setTags } = props
+    const { btnText, newData, onClick, setTags, setCol, rows, variant, width } = props
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -31,10 +33,15 @@ export default function CreateModal(props: any) {
         setTags(value);
     }
 
+    function submitInfo() {
+        onClick();
+        handleClose();
+        newData();
+    }
 
     return (
         <div>
-            <Button onClick={handleOpen} color="success" variant='outlined'>{btnText}</Button>
+            <Button onClick={handleOpen} color="success" variant={variant} sx={{ width: { width } }}>{btnText}</Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -53,12 +60,22 @@ export default function CreateModal(props: any) {
                         <Typography id="transition-modal-title" variant="h6" component="h2" sx={{ color: "#37474f" }}>
                             {btnText}
                         </Typography>
-                        <Stack direction="row"
-                            justifyContent="space-between"
-                            sx={{ marginTop: 2 }}>
-                            <TextField required id='title' variant="outlined" label="Title" color="success" onInput={getTagHandler} />
-                            <Button variant="contained" onClick={onClick} color="success" sx={{ backgroundColor: "gray" }} endIcon={<SendIcon />}>Submit</Button>
-                        </Stack>
+                        <form>
+                            <FormControl sx={{ justifyContent: "space-between" }}>
+                                <Stack direction="row"
+                                    justifyContent="space-between"
+                                    sx={{ marginTop: 2 }}>
+                                    <OutlinedInput sx={{ marginRight: 2 }} required id='title' label="Title" color="success" onInput={getTagHandler} multiline rows={rows} />
+                                    <Button variant="contained" onClick={submitInfo} color="success" sx={{ backgroundColor: "gray" }} endIcon={<SendIcon />}>Submit</Button>
+
+                                    {/* <TextField required id='title' variant="outlined" label="Title" color="success" onInput={getTagHandler} multiline rows={rows} hidden /> */}
+
+                                </Stack>
+                            </FormControl>
+
+                            {/* <FormControl sx={{ justifyContent: "space-between" }}>
+                                <OutlinedInput required id='column_id' type="hidden" defaultValue={col_id}  /></FormControl> */}
+                        </form>
                     </Box>
                 </Fade>
             </Modal>
