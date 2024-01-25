@@ -33,3 +33,33 @@ export function renameHandler(tags: any, column_id: any) {
         }
     }).then((res) => res.json()).then((data) => console.log(data))
 }
+
+export function clearHandler(column_id: any) {
+    const reqBody = { column_id: column_id, type: 'clear' }
+
+    fetch('/api/task', {
+        method: 'POST', body: JSON.stringify(reqBody), headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((res) => res.json()).then((data) => console.log(data))
+}
+
+export function DeleteColHandler(column_id: any) {
+    const reqBody = { column_id: column_id, type: 'delete' }
+
+    fetch('/api/stream', {
+        method: 'POST', body: JSON.stringify(reqBody), headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((res) => res.json()).then((data) => console.log(data))
+}
+
+export function DeleteTaskhandler(id: any) {
+    const reqBody = { id: id, type: 'delete' }
+
+    fetch('/api/task', {
+        method: 'POST', body: JSON.stringify(reqBody), headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((res) => res.json()).then((data) => console.log(data))
+}

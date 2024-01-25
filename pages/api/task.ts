@@ -35,6 +35,24 @@ export default function handler(
         data.push(newColumn);
         fs.writeFileSync(filePath, JSON.stringify(data));
         res.status(201).json({ message: "Task Creation Success", mabo: req.body })
+    } else if (req.method === 'POST' && req.body.type === 'clear') {
+        const column_id = req.body.column_id
+        const filePath = dbDataPathTask();
+        const data = dbDataReadTask(filePath)
+        const newTasks = data.filter((task: any) =>
+            task.stream_id !== column_id
+        )
+        fs.writeFileSync(filePath, JSON.stringify(newTasks));
+        res.status(201).json({ message: "Tasks Cleared Success", mabo: req.body })
+    } else if (req.method === 'POST' && req.body.type === 'delete') {
+        const task_id = req.body.id
+        const filePath = dbDataPathTask();
+        const data = dbDataReadTask(filePath)
+        const newTasks = data.filter((task: any) =>
+            task.id !== task_id
+        )
+        fs.writeFileSync(filePath, JSON.stringify(newTasks));
+        res.status(201).json({ message: "Task Deleted Success", mabo: req.body })
     } else {
         const filePath = dbDataPathTask();
         const data = dbDataReadTask(filePath)

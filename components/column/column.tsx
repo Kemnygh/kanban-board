@@ -1,12 +1,11 @@
 import { Button, Card, Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import CreateModal from "../ui/create-modal";
-import LongMenu from "../ui/menu";
+import LongMenu from "../edit_component/menu";
 
 import { dbDataPath, dbDataRead } from "@/pages/api/stream";
 import { submitTaskHandler } from "@/queries/requests";
 import TaskCard from "../task/task";
-import EditMenu from "../edit_component/edit-column";
 import RenameItem from "../edit_component/edit-column-name";
 
 export default function ColumnItem(props: any) {
@@ -38,14 +37,12 @@ export default function ColumnItem(props: any) {
             {name}
 
           </Typography>
-          {/* <EditMenu refreshName={refreshColumn} stream_id={stream_id} /> */}
-          <LongMenu rename={editHandler} />
+          <LongMenu rename={editHandler} refresh_tasks={refresh} stream_id={stream_id} refresh_cols={refreshColumn} />
         </Stack>}
-      {/* <TaskCard /> */}
       {tasks?.map((task: { id: any; name: any; stream_id: any; }) => {
-        if (task.stream_id === stream_id) { return (<TaskCard key={task.id} task_name={task.name} />) }
+        if (task.stream_id === stream_id) { return (<TaskCard key={task.id} task_name={task.name} refresh_tasks={refresh} task_id={task.id} />) }
       })}
-      <CreateModal btnText='Add Task' rows={3} setTags={setTask}
+      <CreateModal btnText='Add Task' rows={2} setTags={setTask}
         onClick={submitData} newData={refresh} />
     </Box>
   );

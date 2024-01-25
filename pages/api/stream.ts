@@ -51,6 +51,16 @@ export default function handler(
     // console.log(data)
     fs.writeFileSync(filePath, JSON.stringify(data));
     res.status(201).json({ message: "Column Creation Success" })
+  } else if (req.method === 'POST' && req.body.type === 'delete') {
+    const column_id = req.body.column_id
+
+    const filePath = dbDataPath();
+    const data = dbDataRead(filePath)
+    const newStreams = data.filter((stream: any) =>
+      stream.id !== column_id
+    )
+    fs.writeFileSync(filePath, JSON.stringify(newStreams));
+    res.status(201).json({ message: "Column Deleted Successfully", mabo: req.body })
   } else {
     const filePath = dbDataPath();
     const data = dbDataRead(filePath)
