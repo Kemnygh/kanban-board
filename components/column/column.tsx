@@ -13,7 +13,7 @@ export default function ColumnItem(props: any) {
   const { name, tasks, refresh, stream_id, refreshColumn, streams } = props
   const [task, setTask] = useState('');
   const [editName, setEditname] = useState(false);
-  const [erroMsg, setErrorMsg] = useState('');
+  const [erroMsg, setErrorMsg] = useState<any | null>(null);
   const [msgType, setMsgType] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -21,7 +21,7 @@ export default function ColumnItem(props: any) {
   async function submitData() {
     const res_msg = await submitTaskHandler(task, stream_id);
     const key = Object.keys(res_msg)[0]
-    setErrorMsg(res_msg.err)
+    setErrorMsg(res_msg.errmsg)
     setSuccessMsg(res_msg.success)
     setMsgType(key)
     // console.log(msg)

@@ -14,7 +14,7 @@ export default function BoardPage(props: any) {
   const { streams, refreshData, tasks, refreshDataTask } = props
   const [tags, setTags] = useState('');
   const [noOfStreams, setnoOfStreams] = useState(false);
-  const [erroMsg, setErrorMsg] = useState('');
+  const [erroMsg, setErrorMsg] = useState<any | null>(null);;
   const [msgType, setMsgType] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -22,7 +22,7 @@ export default function BoardPage(props: any) {
   async function submitData() {
     const res_msg = await submitHandler(tags)
     const key = Object.keys(res_msg)[0]
-    setErrorMsg(res_msg.err)
+    setErrorMsg(res_msg.errmsg)
     setSuccessMsg(res_msg.success)
     setMsgType(key)
 
