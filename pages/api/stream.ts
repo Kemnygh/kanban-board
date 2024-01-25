@@ -34,7 +34,7 @@ export default function handler(
     const data = dbDataRead(filePath)
     data.push(newColumn);
     fs.writeFileSync(filePath, JSON.stringify(data));
-    res.status(201).json({ message: "Column Creation Success" })
+    res.status(201).json({ message: "Column Created Successfully" })
   } else if (req.method === 'POST' && req.body.type === 'rename') {
     const title = req.body.title
     const column_id = req.body.column_id
@@ -50,7 +50,7 @@ export default function handler(
 
     // console.log(data)
     fs.writeFileSync(filePath, JSON.stringify(data));
-    res.status(201).json({ message: "Column Creation Success" })
+    res.status(201).json({ message: "Column Renamed Successfully" })
   } else if (req.method === 'POST' && req.body.type === 'delete') {
     const column_id = req.body.column_id
 

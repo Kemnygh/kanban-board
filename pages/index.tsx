@@ -47,7 +47,8 @@ export default function Home(props: any) {
 }
 
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: any) {
+  const { params, req, res } = ctx;
   const filePath = dbDataPath();
   const data = dbDataRead(filePath);
   const filePathTask = dbDataPathTask();
@@ -57,6 +58,6 @@ export async function getServerSideProps() {
       streams: data, tasks: dataTask
 
     },
-    // revalidate: 2
+
   }
 }

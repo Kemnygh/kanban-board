@@ -5,6 +5,7 @@ import { Container, Stack, Typography, Box, Button } from "@mui/material";
 import ColumnItem from "../column/column";
 import CreateModal from "../ui/create-modal";
 import { submitHandler } from "@/queries/requests";
+import ActionAlerts from "../ui/alert-modal";
 
 
 
@@ -13,10 +14,20 @@ export default function BoardPage(props: any) {
   const { streams, refreshData, tasks, refreshDataTask } = props
   const [tags, setTags] = useState('');
   const [noOfStreams, setnoOfStreams] = useState(false);
+  const [erroMsg, setErrorMsg] = useState('');
+  const [msgType, setMsgType] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
-  function submitData() {
-    submitHandler(tags)
+
+  async function submitData() {
+    const res_msg = await submitHandler(tags)
+    const key = Object.keys(res_msg)[0]
+    setErrorMsg(res_msg.err)
+    setSuccessMsg(res_msg.success)
+    setMsgType(key)
+
   }
+
 
   const total = streams.length;
 
@@ -34,7 +45,10 @@ export default function BoardPage(props: any) {
   }
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ position: 'relative' }}>
+      {erroMsg !== '' && msgType === 'err' ? <ActionAlerts severity='warning' response={erroMsg} /> : null}
+      {successMsg !== '' && msgType === 'success' ? <ActionAlerts severity='success' response={successMsg} /> : null}
+
       <Typography variant="h1" sx={{ marginLeft: '10px' }}>Kanban</Typography>
       <Stack spacing={3} direction={"row"} sx={{ marginLeft: '20px' }}>
         <Typography>Dashboard</Typography>
@@ -49,6 +63,7 @@ export default function BoardPage(props: any) {
           </Stack>
         </Box>
       </Container>
+
     </Container>
   );
 }

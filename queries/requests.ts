@@ -1,75 +1,178 @@
-export function submitHandler(tags: any) {
+export async function submitHandler(tags: any) {
     const reqBody = { title: tags, type: 'Column' }
     if (!reqBody.title || reqBody.title === '') {
-        return console.log('Please enter the title')
+        return { 'err': 'Please enter the title' };
     }
-    fetch('/api/stream', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+
+
+    try {
+        const response = await fetch('/api/stream', {
+            method: 'POST', body: JSON.stringify(reqBody), headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }
 
-export function submitTaskHandler(tags: any, column_id: any) {
-    const reqBody = { title: tags, column_id: column_id, type: 'task' }
+export async function submitTaskHandler(tags: any, column_id: any) {
+    const reqBody = { title: tags, column_id: column_id, type: 'task' };
+
     if (!reqBody.title || reqBody.title === '') {
-        return console.log('Please enter the title')
+        return { 'err': 'Please enter the title' };
+
     }
-    fetch('/api/task', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+
+    try {
+        const response = await fetch('/api/task', {
+            method: 'POST',
+            body: JSON.stringify(reqBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }
 
-export function renameHandler(tags: any, column_id: any) {
+
+export async function renameHandler(tags: any, column_id: any) {
     const reqBody = { title: tags, column_id: column_id, type: 'rename' }
     if (!reqBody.title || reqBody.title === '') {
-        return console.log('Please enter the title')
+        return { 'err': 'Please enter the title' };
     }
-    fetch('/api/stream', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+    try {
+        const response = await fetch('/api/stream', {
+            method: 'POST', body: JSON.stringify(reqBody), headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }
 
-export function clearHandler(column_id: any) {
+export async function clearHandler(column_id: any) {
     const reqBody = { column_id: column_id, type: 'clear' }
 
-    fetch('/api/task', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+    try {
+        const response = await fetch('/api/task', {
+            method: 'POST', body: JSON.stringify(reqBody), headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }
 
-export function DeleteColHandler(column_id: any) {
+export async function DeleteColHandler(column_id: any) {
     const reqBody = { column_id: column_id, type: 'delete' }
 
-    fetch('/api/stream', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+
+    try {
+        const response = await
+            fetch('/api/stream', {
+                method: 'POST', body: JSON.stringify(reqBody), headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }
 
-export function DeleteTaskhandler(id: any) {
+export async function DeleteTaskhandler(id: any) {
     const reqBody = { id: id, type: 'delete' }
 
-    fetch('/api/task', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+    try {
+        const response = await fetch('/api/task', {
+            method: 'POST', body: JSON.stringify(reqBody), headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }
 
-export function MoveTaskhandler(id: any, new_id: any) {
+export async function MoveTaskhandler(id: any, new_id: any) {
     const reqBody = { id: id, new_id: new_id, type: 'move' }
 
-    fetch('/api/task', {
-        method: 'POST', body: JSON.stringify(reqBody), headers: {
-            'Content-Type': 'application/json'
+
+
+    try {
+        const response = await fetch('/api/task', {
+            method: 'POST', body: JSON.stringify(reqBody), headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            // throw new Error('Network response was not ok');
+            return { 'err': 'Network response was not ok' };
         }
-    }).then((res) => res.json()).then((data) => console.log(data))
+
+        const data = await response.json();
+        return { 'success': data.message }; // Return the message received from the API
+    } catch (error: any) {
+        // console.error('Error submitting task:', error.message);
+        return { 'err': 'Error submitting task' };
+    }
 }

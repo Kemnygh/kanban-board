@@ -33,7 +33,8 @@ export default function CreateModal(props: any) {
         setTags(value);
     }
 
-    function submitInfo() {
+    function submitInfo(e: any) {
+        e.preventDefault();
         onClick();
         handleClose();
         newData();
@@ -60,13 +61,13 @@ export default function CreateModal(props: any) {
                         <Typography id="transition-modal-title" variant="h6" component="h2" sx={{ color: "#37474f" }}>
                             {btnText}
                         </Typography>
-                        <form>
+                        <form onSubmit={submitInfo}>
                             <FormControl sx={{ justifyContent: "space-between" }}>
                                 <Stack direction="row"
                                     justifyContent="space-between"
                                     sx={{ marginTop: 2 }}>
-                                    <OutlinedInput sx={{ marginRight: 2 }} required id='title' label="Title" color="success" onInput={getTagHandler} multiline rows={rows} />
-                                    <Button variant="contained" onClick={submitInfo} color="success" sx={{ backgroundColor: "gray" }} endIcon={<SendIcon />}>Submit</Button>
+                                    <TextField sx={{ marginRight: 2 }} required id='title' label="Title" color="success" onInput={getTagHandler} multiline rows={rows} />
+                                    <Button variant="contained" type='submit' color="success" sx={{ backgroundColor: "gray" }} endIcon={<SendIcon />}>Submit</Button>
                                 </Stack>
                             </FormControl>
 
