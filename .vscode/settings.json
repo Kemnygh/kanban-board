@@ -1,5 +1,10 @@
 {
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+     "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 150,
+  "workbench.editor.wrapTabs": true,
+  "notebook.output.wordWrap": true,
+  "html.format.wrapAttributes": "force-expand-multiline",
 }

@@ -1,18 +1,28 @@
-import { clearHandler } from "@/queries/requests";
 import EditDialog from "../ui/edit-modal";
-import CleaningServicesTwoToneIcon from '@mui/icons-material/CleaningServicesTwoTone';
-import ActionAlerts from "../ui/alert-modal";
+import CleaningServicesTwoToneIcon from "@mui/icons-material/CleaningServicesTwoTone";
+import { useMutation } from "@apollo/client";
+import { CLEAR_STREAM } from "@/graphql/mutations";
+import { GET_STREAMS } from "@/graphql/queries";
 
 export default function ClearColumn(props: any) {
-    const { stream_id, refresh_tasks, close_menu } = props
+  const { stream_id, close_menu } = props;
 
-    function submitData() {
-        clearHandler(stream_id);
-        refresh_tasks();
-        close_menu();
-    }
+  const [clearStream] = useMutation(CLEAR_STREAM, {
+    variables: { stream_id },
+    refetchQueries: [{ query: GET_STREAMS }],
+  });
 
-    return (
-        <EditDialog name='Clear' icon={<CleaningServicesTwoToneIcon />} message='Please note this will delete all tasks retaled to this stream.' onClick={submitData} />
-    );
+  function submitData() {
+    clearStream({ variables: { streamId: stream_id } });
+    close_menu();
+  }
+
+  return (
+    <EditDialog
+      name="Clear"
+      icon={<CleaningServicesTwoToneIcon />}
+      message="Please note this will delete all tasks retaled to this stream."
+      onClick={submitData}
+    />
+  );
 }

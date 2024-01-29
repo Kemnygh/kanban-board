@@ -1,70 +1,117 @@
-
 import { useState } from "react";
 import { ChevronRight } from "@mui/icons-material";
 import { Container, Stack, Typography, Box, Button } from "@mui/material";
 import ColumnItem from "../column/column";
 import CreateModal from "../ui/create-modal";
-import { submitHandler } from "@/queries/requests";
 import ActionAlerts from "../ui/alert-modal";
-
-
-
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_STREAMS } from "@/graphql/queries";
+import { CREATE_STREAM } from "@/graphql/mutations";
 
 export default function BoardPage(props: any) {
-  const { streams, refreshData, tasks, refreshDataTask } = props
-  const [tags, setTags] = useState('');
-  const [noOfStreams, setnoOfStreams] = useState(false);
-  const [erroMsg, setErrorMsg] = useState<any | null>(null);;
-  const [msgType, setMsgType] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const { data, loading, error } = useQuery(GET_STREAMS);
+  // console.log(data);
+  const { streams } = props;
+  const [tags, setTags] = useState("");
+  const [noOfStreams, setNoOfStreams] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [msgType, setMsgType] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
+  const [createStream] = useMutation(CREATE_STREAM, {
+    variables: { tags },
+    refetchQueries: [{ query: GET_STREAMS }],
+  });
 
   async function submitData() {
-    const res_msg = await submitHandler(tags)
-    const key = Object.keys(res_msg)[0]
-    setErrorMsg(res_msg.errmsg)
-    setSuccessMsg(res_msg.success)
-    setMsgType(key)
+    if (tags === "") {
+      setMsgType("err");
+      return setErrorMsg("Enter Title");
+    } else if (error) {
+      setMsgType("err");
+      return setErrorMsg("There's a problem creating a stream");
+    } else if (loading) {
+      setMsgType("success");
+      setSuccessMsg("Loading Streams....");
+    }
+    createStream({ variables: { name: tags } });
 
+    setMsgType("success");
+    setSuccessMsg("Stream Created Successfully");
   }
 
-
-  const total = streams.length;
-
+  const total = data?.streams.length;
 
   function addDisabledHandler() {
-
     if (total === 4) {
-      setnoOfStreams(true);
+      setNoOfStreams(true);
     }
-    return noOfStreams
+    return noOfStreams;
   }
   function removeDsabledHandler() {
-    setnoOfStreams(false);
-    return noOfStreams
+    setNoOfStreams(false);
+    return noOfStreams;
   }
 
   return (
-    <Container maxWidth="xl" sx={{ position: 'relative' }}>
-      {erroMsg !== '' && msgType === 'err' ? <ActionAlerts severity='warning' response={erroMsg} /> : null}
-      {successMsg !== '' && msgType === 'success' ? <ActionAlerts severity='success' response={successMsg} /> : null}
+    <Container maxWidth="xl" sx={{ position: "relative" }}>
+      {errorMsg !== "" && msgType === "err" ? (
+        <ActionAlerts severity="warning" response={errorMsg} />
+      ) : null}
+      {successMsg !== "" && msgType === "success" ? (
+        <ActionAlerts severity="success" response={successMsg} />
+      ) : null}
 
-      <Typography variant="h1" sx={{ marginLeft: '10px' }}>Kanban</Typography>
-      <Stack spacing={3} direction={"row"} sx={{ marginLeft: '20px' }}>
+      <Typography variant="h1" sx={{ marginLeft: "10px" }}>
+        Kanban
+      </Typography>
+      <Stack spacing={3} direction={"row"} sx={{ marginLeft: "20px" }}>
         <Typography>Dashboard</Typography>
         <ChevronRight />
         <Typography>Kanban</Typography>
       </Stack>
       <Container maxWidth="xl">
-        <Box sx={{ border: '1px solid grey', height: '80vh', marginTop: 2, borderRadius: '10px' }} >
-          <Stack spacing={3} direction={"row"} sx={{ margin: '10px' }}>
-            {streams?.map((stream: { id: any; name: any; }) => <ColumnItem key={stream.id} name={stream.name} stream_id={stream.id} tasks={tasks} refresh={refreshDataTask} refreshColumn={refreshData} streams={streams} />)}
-            {noOfStreams ? <Button variant='contained' color='error' onMouseLeave={removeDsabledHandler} sx={{ height: 60, background: 'gray' }}>BOARD IS FULL</Button> : <CreateModal btnText='Add Stream' variant='contained' setTags={setTags} onClick={submitData} newData={refreshData} color='success' inMouse={addDisabledHandler} />}
+        <Box
+          sx={{
+            border: "1px solid grey",
+            height: "80vh",
+            marginTop: 2,
+            borderRadius: "10px",
+          }}
+        >
+          <Stack spacing={3} direction={"row"} sx={{ margin: "10px" }}>
+            {data?.streams.map((stream: { id: any; name: any; tasks: any }) => (
+              <ColumnItem
+                key={stream.id}
+                name={stream.name}
+                stream_id={stream.id}
+                tasks={stream.tasks}
+                streams={data?.streams}
+                refresh={data}
+              />
+            ))}
+            {noOfStreams ? (
+              <Button
+                variant="contained"
+                color="error"
+                onMouseLeave={removeDsabledHandler}
+                sx={{ height: 60, background: "gray" }}
+              >
+                BOARD IS FULL
+              </Button>
+            ) : (
+              <CreateModal
+                btnText="Add Stream"
+                variant="contained"
+                setTags={setTags}
+                onClick={submitData}
+                color="success"
+                inMouse={addDisabledHandler}
+              />
+            )}
           </Stack>
         </Box>
       </Container>
-
     </Container>
   );
 }
-
