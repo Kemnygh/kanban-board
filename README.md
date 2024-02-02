@@ -1,6 +1,6 @@
 # Kanban App
 
-#### This is a prototype app of a Kanban Board. Latest Version Dated 26-JAN-2023.
+#### This is a prototype app of a Kanban Board. Latest Version Dated 26-JAN-2024.
 
 #### By Kemuel Nalifuma
 

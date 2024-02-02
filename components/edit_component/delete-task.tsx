@@ -6,7 +6,6 @@ import { GET_STREAMS } from "@/graphql/queries";
 
 export default function DeleteTask(props: any) {
   const { id } = props;
-  //   console.log(id);
   const [deleteTask] = useMutation(DELETE_TASK, {
     variables: { id },
     refetchQueries: [{ query: GET_STREAMS }],

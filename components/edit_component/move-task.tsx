@@ -3,7 +3,6 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import DriveFileMoveTwoToneIcon from "@mui/icons-material/DriveFileMoveTwoTone";
-import { MoveTaskhandler } from "@/queries/requests";
 import { Stack } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { MOVE_TASK } from "@/graphql/mutations";

@@ -1,7 +1,6 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClearColumn from "./clear-column";
 import { Button } from "@mui/material";
@@ -13,7 +12,7 @@ const options = ["Rename", "Clear", "Delete"];
 const ITEM_HEIGHT = 48;
 
 export default function LongMenu(props: any) {
-  const { rename, refresh_tasks, stream_id, refresh_cols } = props;
+  const { rename, stream_id } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

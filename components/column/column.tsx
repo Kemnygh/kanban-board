@@ -13,7 +13,7 @@ export default function ColumnItem(props: any) {
   const { name, tasks, stream_id, streams } = props;
   const [task, setTask] = useState("");
   const [editName, setEditName] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<any | null>(null);
+  const [errorMsg, setErrorMsg] = useState("");
   const [msgType, setMsgType] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 

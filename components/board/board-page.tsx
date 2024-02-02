@@ -10,8 +10,7 @@ import { CREATE_STREAM } from "@/graphql/mutations";
 
 export default function BoardPage(props: any) {
   const { data, loading, error } = useQuery(GET_STREAMS);
-  // console.log(data);
-  const { streams } = props;
+
   const [tags, setTags] = useState("");
   const [noOfStreams, setNoOfStreams] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");

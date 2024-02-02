@@ -4,13 +4,12 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
-import { Button, Card, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute" as const,
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
